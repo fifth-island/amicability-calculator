@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto">
+  <title>Amicable Numbers</title>
+  <link rel="stylesheet" href="rules.css">
+ 
+ </head>
+
+ <body>
+  <header><h1>Amicable Numbers</h1></header>
+  <script>
+   
+   // check_amicability
+   // purpose: evaluate whether two numbers are amicable (main function)
+   // parameters: none
+   // returns: nothing
+   // note: - all the necessary elements are retrieved from the HTML form
+   //       and everything is printed out using from innerHTML methods
+   //       - it is a function that invokes several helper functions to 
+   //       simplify the tasks for finding the amicability
+   function check_amicability() 
+   {
+    // retrieve the two user inputs from the HTML
+    number_one = document.getElementById('numberone');
+    number_two = document.getElementById('numbertwo');
+
+    // generate arrays holding all the factors from both numbers 
+    factors_one = get_factors(number_one);
+    factors_two = get_factors(number_two);
+
+    // sums up all the elements in each array
+    addition_one = add(factors_one);
+    addition_two = add(factors_two);
+
+    // compares additions with original values, which indicates the amicability
+    // in any of the cases, a print function will be invoked to send print
+    if ((addition_one == number_two.value) && 
+         (addition_two == number_one.value)) {
+          const word = " are amicable";
+          print_results(number_one, number_two, word);
+     } else {
+          const word = " are not amicable"; 
+          print_results(number_one, number_two, word);
+     }
+    
+   }
+
+   // get_factors
+   // purpose: identify all the factors from a single number
+   // parameters: a real number
+   // returns: an array of factored numbers
+   function get_factors(number)
+   {
+    var array = Array();
+    for (var marker = 1; marker < number.value; marker++) {
+     if ( (number.value % marker) == 0 ) {
+      array.push(marker);
+     }
+    }
+    return array;
+   }
+
+   // add
+   // purpose: to sum all the numbers in an array
+   // parameters: an array of numbers representing factors of a number
+   // returns: a number representing the sum of the factors
+   function add(factors) {
+    var addition = 0;
+    for (var j = 0; j < factors.length; j++) {
+        addition = addition + factors.at(j);
+    }
+
+    return addition;
+   }
+
+   // print_results
+   // purpose: to print all the expected outcome into the HTML page
+   // parameters: two given numbers and a string specifying their relation
+   // returns: nothing 
+   // notes: all the things here are printed in the page using innerHTML method
+   function print_results(number_one, number_two, word) 
+   {
+   // print whether they are amicable or not
+   document.getElementById('amicable').innerHTML = ("The numbers: " + number_one.value +
+                                                       " and " + number_two.value + word);
+
+   // print the factors from both numbers regardless of whether they are amicable or not
+   document.getElementById('factors').innerHTML = ("Number " + number_one.value + " factors: "
+                                                   + get_factors(number_one) + "<br>"
+                                                   + "Number " + number_two.value + " factors: "
+                                                   + get_factors(number_two));
+   }
+  </script>
+
+  <form>
+   <input type="number" id="numberone" placeholder="Enter the first number">
+   <input type="number" id="numbertwo" placeholder="Enter the second number">
+   <input type="button" id="btn" value="submit" onclick="check_amicability();">
+
+  </form>
+
+  <br>
+
+ </div>
+
+ <div class="results">
+  <h2>Results:</h2>
+ <div id="amicable"></div>
+ <br>
+ <h2>Factors of numbers:</h2>
+ <div id="factors"></div>
+ </div>
+
+ </body>
+</html>
